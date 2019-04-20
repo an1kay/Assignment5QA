@@ -1,5 +1,6 @@
 package edu.kennesaw.seclass.gradescalc;
 
-public class Student {
+public class Student { 
+	
 	
 }
