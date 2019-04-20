@@ -2,21 +2,56 @@ package edu.kennesaw.seclass.gradescalc;
 
 public class Student { 
 	
-	Student(){
+	private String name;
+	private String id;
+	private int attendance;
+	
+	public Student(){
+		name = "";
+		id = "";
+		attendance = 0;
+	}
+	
+	public Student(String name, String id, int attendance) {
+		this.name = name;
+		this.id = id;
+		this.attendance = attendance;
+	}
+	
+	public String getName(){
+		return name;
 		
 	}
 	
-	String getName(){
-		return null;
-		
+	public String getId() {
+		return id;
 	}
 	
-	String getId() {
-		return null;
+	public int getAttendance() {
+		return attendance;
 	}
 	
-	int getAttendance() {
-		return 0;
+	public void setName(String n)
+	{
+		if(n.length() > 0)
+		{
+			this.name = n;
+		}
 	}
 	
+	public void setId(String i)
+	{
+		if(i.length() > 0)
+		{
+			this.id = i;
+		}
+	}
+	
+	public void setAttendance(int a)
+	{
+		if(a >= 0)
+		{
+			this.attendance = a;
+		}
+	}
 }
