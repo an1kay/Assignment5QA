@@ -4,28 +4,35 @@ import java.util.HashSet;
 
 public class GradesDB {
 	
-	public int getNumStudents() {		
+	GradesDB(String gradeSheet){
+		
+	}
+	
+	public int getNumStudents() {
+		return 0;		
 		
 	}
 	
 	public int getNumAssignments() {
+		return 0;
 		
 	}
 	
 	public int getNumProjects() {
+		return 0;
 		
 	}
 	
 	public HashSet<Student> getStudents(){
-		
+		return new HashSet<Student>();
 	}
 	
-	public Student getStudentByName() {
-		
+	public Student getStudentByName(String name) {
+		return new Student();
 	}
 	
-	public Student getStudentByID() {
-		
+	public Student getStudentByID(String id) {
+		return new Student();
 	}
 
 }
