@@ -111,9 +111,8 @@ public class GradesDB {
 				} else if (cellPos == 0)
 				{
 					name = cell.getStringCellValue();
-				} else if (cellPos == 1)
-				{
-					id = cell.getStringCellValue();
+				} else if (cellPos == 1) {
+					id = Double.toString(cell.getNumericCellValue());
 				}
 			}
 
@@ -124,11 +123,11 @@ public class GradesDB {
 				Cell cell = AttCellIterator.next();
 				if (cellPos == 1)
 				{
-					attendance = cell.getStringCellValue();
+					attendance = Double.toString(cell.getNumericCellValue());
 				}
 			}
 
-			students.add(new Student(name,id,Integer.parseInt(attendance)));
+			students.add(new Student(name,id,Double.parseDouble(attendance)));
 		}
 	}
 
@@ -144,7 +143,7 @@ public class GradesDB {
 	
 	public int getNumStudents() {
 		// counts the number of students in the file and returns the resulting number
-		return 0;		
+		return students.size();
 		
 	}
 	

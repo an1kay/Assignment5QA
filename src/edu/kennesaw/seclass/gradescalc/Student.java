@@ -4,15 +4,15 @@ public class Student {
 	
 	private String name;
 	private String id;
-	private int attendance;
+	private double attendance;
 	
 	public Student(){
 		name = "";
 		id = "";
-		attendance = 0;
+		attendance = 0.0;
 	}
 	
-	public Student(String name, String id, int attendance) {
+	public Student(String name, String id, double attendance) {
 		this.name = name;
 		this.id = id;
 		this.attendance = attendance;
@@ -27,9 +27,7 @@ public class Student {
 		return id;
 	}
 	
-	public int getAttendance() {
-		return attendance;
-	}
+	public double getAttendance() { return attendance;	}
 	
 	public void setName(String n)
 	{
