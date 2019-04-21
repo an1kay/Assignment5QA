@@ -1,5 +1,7 @@
 package edu.kennesaw.seclass.gradescalc;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -18,19 +20,32 @@ public class GradesDB {
 	GradesDB(String path) throws Exception {
 		//imports grade sheet based on a path
 		String studentInfoSheet = "StudentsInfo";
+		String attendanceSheet = "Attendance";
 		File DBFile = new File(path);
-		XSSFWorkbook workBook;
-		XSSFSheet workSheet = null;
+		if (!DBFile.exists())
+		{
+			throw new Exception("File does not exist at this path!!");
+		}
+		XSSFWorkbook workBook = null;
+		XSSFSheet infoWorkSheet = null;
+		XSSFSheet attWorkSheet = null;
+
 		try {
 			FileInputStream fis = new FileInputStream(DBFile);
-			workBook = 	ExtractWorkbook(fis);
-			workSheet = ExtractSheet(workBook, studentInfoSheet);
+			//workBook = new XSSFWorkbook(path);
+			workBook = new XSSFWorkbook(DBFile);
+			//workBook = 	ExtractWorkbook(DBFile);
+			infoWorkSheet = ExtractSheet(workBook, studentInfoSheet);
+			attWorkSheet = ExtractSheet(workBook,attendanceSheet);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}
-		if (workSheet != null	)
+		} catch (Exception e)
 		{
-			ExtractStudents(workSheet);
+			throw new Exception("Exception is: " + e.toString());
+		}
+		if (infoWorkSheet != null && attWorkSheet != null)
+		{
+			ExtractStudents(infoWorkSheet,attWorkSheet);
 
 		} else
 		{
@@ -41,13 +56,15 @@ public class GradesDB {
 
 	}
 
-	private XSSFWorkbook ExtractWorkbook(FileInputStream fis) {
+	private XSSFWorkbook ExtractWorkbook(File file) {
 		XSSFWorkbook workBook = null;
 		try {
-			workBook = new XSSFWorkbook(fis);
+			workBook = new XSSFWorkbook(file);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InvalidFormatException e) {
 			e.printStackTrace();
 		}
 		return workBook;
@@ -63,9 +80,56 @@ public class GradesDB {
 		return workSheet;
 	}
 
-	private void ExtractStudents(XSSFSheet workSheet)
+	private void ExtractStudents(XSSFSheet studentInfoSheet, XSSFSheet studentAttendanceSheet)
 	{
-		Iterator<Row> RowIterator = workSheet.iterator();
+		//okay, in the scope of this method, everything has worked and we have a worksheet to work with
+		//we just need to extract the information and create and add students to the hash set
+		/*	Name	ID		Email	C	C++	Java	CS_Job_Ex
+		*	str		num		str		num	num	num		str
+		* */
+		String name = "", id = "", attendance= "";
+
+
+
+
+		Iterator<Row> InfoRowIterator = studentInfoSheet.iterator();
+		Iterator<Row> AttRowIterator = studentAttendanceSheet.iterator();
+		Row Inforow = InfoRowIterator.next(); //used to set the row down one to correct placement.
+		Row AttRow = AttRowIterator.next();
+
+		while (InfoRowIterator.hasNext())
+		{
+			Inforow = InfoRowIterator.next();
+
+			Iterator<Cell> InfocellIterator = Inforow.cellIterator();
+			for (int cellPos = 0; InfocellIterator.hasNext(); cellPos++)//inner cell loop, only make student after done, iterates through info sheet
+			{
+				Cell cell = InfocellIterator.next();
+				if (cellPos > 2)
+				{
+					break;
+				} else if (cellPos == 0)
+				{
+					name = cell.getStringCellValue();
+				} else if (cellPos == 1)
+				{
+					id = cell.getStringCellValue();
+				}
+			}
+
+			AttRow = AttRowIterator.next();
+			Iterator<Cell> AttCellIterator = AttRow.cellIterator();
+			for (int cellPos = 0; AttCellIterator.hasNext(); cellPos++)
+			{
+				Cell cell = AttCellIterator.next();
+				if (cellPos == 1)
+				{
+					attendance = cell.getStringCellValue();
+				}
+			}
+
+			students.add(new Student(name,id,Integer.parseInt(attendance)));
+		}
 	}
 
 
