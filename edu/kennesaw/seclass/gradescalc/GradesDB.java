@@ -6,16 +6,19 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.text.NumberFormat;
 
 public class GradesDB {
 
-	private HashSet<Student> students = new HashSet();
+	private HashSet<Student> students = new HashSet<Student>();
 
 	GradesDB(String path) throws Exception {
 		//imports grade sheet based on a path
@@ -88,6 +91,10 @@ public class GradesDB {
 		*	str		num		str		num	num	num		str
 		* */
 		String name = "", id = "", attendance= "";
+		NumberFormat nf = NumberFormat.getNumberInstance();
+		nf.setMaximumFractionDigits(0);
+		nf.setGroupingUsed(false);
+		nf.setRoundingMode(RoundingMode.FLOOR);		
 
 
 
@@ -112,7 +119,7 @@ public class GradesDB {
 				{
 					name = cell.getStringCellValue();
 				} else if (cellPos == 1) {
-					id = Double.toString(cell.getNumericCellValue());
+					id = nf.format(cell.getNumericCellValue());
 				}
 			}
 
@@ -158,16 +165,37 @@ public class GradesDB {
 		
 	}
 	
+	//Returns private Hashset 'students'
 	public HashSet<Student> getStudents(){
-		return new HashSet<Student>();
+		return students;
 	}
 	
-	public Student getStudentByName(String name) {
-		return new Student();
+	//Iterates through students Hashset, comparing names as it goes. Once it finds a match, breaks out then returns it
+	public Student getStudentByName(String name) {		
+		Student stu = new Student();
+		
+		for(Student s : students) {
+			if(s.getName().compareTo(name) == 0) {
+				stu = s;
+				break;
+				//System.out.println(s.getName() + s.getId());				
+			}
+		}
+		return stu;
 	}
 	
+	//Iterates through students Hashset, comparing id's as it goes. Once it finds a match, breaks out then returns it
 	public Student getStudentByID(String id) {
-		return new Student();
+		Student stu = new Student();
+		
+		for(Student s : students) {
+			if(s.getId().compareTo(id) == 0) {
+				stu = s;
+				break;
+				//System.out.println(s.getName() + s.getId());				
+			}
+		}
+		return stu;
 	}
 
 }
