@@ -27,7 +27,7 @@ public class Student {
 		return id;
 	}
 	
-	public double getAttendance() { return attendance;	}
+	public int getAttendance() { return (int)attendance;	}
 	
 	public void setName(String n)
 	{
