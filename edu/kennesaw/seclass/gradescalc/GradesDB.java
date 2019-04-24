@@ -24,11 +24,6 @@ public class GradesDB {
 		String studentInfoSheet = "StudentsInfo";
 		String attendanceSheet = "Attendance";
 
-//		//Cole's edits
-//		String indivGradesSheet = "IndividualGrades";
-//		String indivContribsSheet = "IndividualContribs";
-//		String teamGradesSheet = "TeamGrades";
-//		//end of Cole's edits
 
 		File DBFile = new File(path);
 		if (!DBFile.exists())
