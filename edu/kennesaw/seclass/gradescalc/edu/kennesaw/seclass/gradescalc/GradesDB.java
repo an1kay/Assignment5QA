@@ -6,7 +6,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,6 +23,13 @@ public class GradesDB {
 		//imports grade sheet based on a path
 		String studentInfoSheet = "StudentsInfo";
 		String attendanceSheet = "Attendance";
+
+//		//Cole's edits
+//		String indivGradesSheet = "IndividualGrades";
+//		String indivContribsSheet = "IndividualContribs";
+//		String teamGradesSheet = "TeamGrades";
+//		//end of Cole's edits
+
 		File DBFile = new File(path);
 		if (!DBFile.exists())
 		{
@@ -140,13 +146,6 @@ public class GradesDB {
 
 
 
-
-
-
-
-
-
-
 	
 	public int getNumStudents() {
 		// counts the number of students in the file and returns the resulting number
@@ -155,14 +154,59 @@ public class GradesDB {
 	}
 	
 	public int getNumAssignments() {
-		//counts the number of
-		return 0;
-		
+		//counts the number of assignments based on the first row columns and returns the amount
+		int cellPos = 0;
+		try {
+			FileInputStream file = new FileInputStream(new File("DB/GradesDatabase.xlsx"));
+
+			XSSFWorkbook workbook = new XSSFWorkbook(file);
+			XSSFSheet datatypeSheet = workbook.getSheet("IndividualGrades");
+			Iterator<Row> iterator = datatypeSheet.iterator();
+			//int cellPos = 0;
+
+			Row currentRow = iterator.next();
+			Iterator<Cell> cellIterator = currentRow.iterator();
+
+			cellIterator.next();
+			for (cellPos = 0; cellIterator.hasNext(); cellPos++) {
+				Cell currentCell = cellIterator.next();
+			}
+			//int cellAmt = cellPos;
+			//return cellAmt;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		int cellAmt = cellPos;
+		return cellAmt;
 	}
 	
 	public int getNumProjects() {
-		return 0;
-		
+		//counts number of projects based on first row columns and returns amount
+		int cellPos = 0;
+		try {
+			FileInputStream file = new FileInputStream(new File("DB/GradesDatabase.xlsx"));
+
+			XSSFWorkbook workbook = new XSSFWorkbook(file);
+			XSSFSheet datatypeSheet = workbook.getSheet("IndividualContribs");
+			Iterator<Row> iterator = datatypeSheet.iterator();
+			//int cellPos = 0;
+
+			Row currentRow = iterator.next();
+			Iterator<Cell> cellIterator = currentRow.iterator();
+
+			cellIterator.next();
+			for (cellPos = 0; cellIterator.hasNext(); cellPos++) {
+				Cell currentCell = cellIterator.next();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		int cellAmt = cellPos;
+		return cellAmt;
 	}
 	
 	//Returns private Hashset 'students'

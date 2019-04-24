@@ -1,9 +1,9 @@
 <component name="libraryTable">
-  <library name="lib2">
+  <library name="lib">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/lib2" />
-      <root url="file://$PROJECT_DIR$/lib2/ooxml-lib" />
       <root url="file://$PROJECT_DIR$/lib2/lib" />
+      <root url="file://$PROJECT_DIR$/lib2/ooxml-lib" />
+      <root url="file://$PROJECT_DIR$/lib2" />
     </CLASSES>
     <JAVADOC>
       <root url="file://$PROJECT_DIR$/lib2/docs/apidocs/dev" />
